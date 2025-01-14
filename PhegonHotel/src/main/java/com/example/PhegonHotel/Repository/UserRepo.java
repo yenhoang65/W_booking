@@ -9,8 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
 
-    Optional<User> findByGoogleId(String googleId);
-
     boolean existsByUsername(String username);
 
     Optional<User> findByUsername(String username);

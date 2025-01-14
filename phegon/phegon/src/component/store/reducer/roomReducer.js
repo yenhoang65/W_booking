@@ -14,6 +14,21 @@ export const getRoomAll = createAsyncThunk(
         }
     }
 );
+
+export const getRoomTop5 = createAsyncThunk(
+    "users/rooms/top5-most-booked",
+    async (_, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            // const token = localStorage.getItem("token");
+            const { data } = await api.get("/users/rooms/top5-most-booked");
+
+            return fulfillWithValue(data);
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 export const getRoomById = createAsyncThunk(
     "users/rooms/getRoomById",
     async (roomId, { rejectWithValue, fulfillWithValue }) => {
@@ -35,6 +50,7 @@ export const roomReducer = createSlice({
         errorMessage: "",
         loader: false,
         rooms: [],
+        topRooms: [],
         room: "",
         selectedRoomId: null, // Lưu roomId của phòng được chọn
     },
@@ -54,6 +70,9 @@ export const roomReducer = createSlice({
             })
             .addCase(getRoomById.fulfilled, (state, { payload }) => {
                 state.room = payload.room;
+            })
+            .addCase(getRoomTop5.fulfilled, (state, { payload }) => {
+                state.topRooms = payload.roomList; // Lưu top 5 phòng
             });
     },
 });

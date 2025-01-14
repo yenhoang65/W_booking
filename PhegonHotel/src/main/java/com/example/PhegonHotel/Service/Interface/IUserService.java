@@ -34,4 +34,11 @@ public interface IUserService {
                            MultipartFile photo,
                            String role);
 
+
+    ResponseDTO forgotPassword(String email);
+
+    ResponseDTO verifyOtp(String otp);
+
+    ResponseDTO resetPassword(String email,String newPassword, String confirmPassword);
+
 }

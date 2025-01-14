@@ -1,16 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import {useCallback, useEffect, useState} from "react";
-import image803 from "../../../public/image/image803.png";
-import image804 from "../../../public/image/image804.png";
+import { useCallback, useEffect, useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HashLoader } from "react-spinners";
-import { login, messageClear, googleLogin} from "../store/reducer/authReducer";
+import { login, messageClear, googleLogin } from "../store/reducer/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { LoginSocialGoogle} from "reactjs-social-login";
-import { GoogleLoginButton} from "react-social-login-buttons";
-
+import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
+import {
+    FacebookLoginButton,
+    GoogleLoginButton,
+} from "react-social-login-buttons";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -36,145 +36,180 @@ const Login = () => {
         dispatch(login(state));
     };
 
-
-
-    // const handleGoogleLoginSuccess = (response) => {
-    //     const tokenId = response.tokenId;
-    //     dispatch(googleLogin(tokenId)); // Gọi action googleLogin
-    // };
-    //
-    // const handleGoogleLoginFailure = (response) => {
-    //     console.error("Login failed:", response);
-    //     toast.error("Google login failed");
-    // };
-    const onLoginStart = useCallback(() => {
-    }, []);
+    const onLoginStart = useCallback(() => {}, []);
 
     const onLogoutFailure = useCallback(() => {
-        alert("logout fail");
+        alert("Logout failed");
     }, []);
 
     const onLogoutSuccess = useCallback(() => {
-        alert("logout success");
+        alert("Logout successful");
     }, []);
 
-
-    // Google
-    const onLoginSuccessGoogle = useCallback(({data }) => {
-        console.log("data: ", data);
-        const token = data.access_token;
-        if (data) {
-            dispatch(googleLogin(token));
-        } else {
-            console.log("Login failed. No access token received.");
-        }
-    },[])
+    const onLoginSuccessGoogle = useCallback(
+        ({ data }) => {
+            const token = data.access_token;
+            if (data) {
+                dispatch(googleLogin(token));
+            } else {
+                console.error("Login failed. No access token received.");
+            }
+        },
+        [dispatch]
+    );
 
     const handleGoogleReject = useCallback((err) => {
-        console.log("Google login error: ", err);
+        console.error("Google login error: ", err);
     }, []);
-
 
     useEffect(() => {
         if (successMessage) {
-            toast.success("Success");
+            toast.success("Login successful!");
             dispatch(messageClear());
+            localStorage.setItem("username", state.username);
             navigate("/");
         }
         if (errorMessage) {
             toast.error(errorMessage);
             dispatch(messageClear());
         }
-    }, [successMessage, errorMessage]);
+    }, [successMessage, errorMessage, dispatch, navigate]);
 
     return (
-
-            <div className="flex justify-center items-center text-center">
-                <div className="mt-[40px] border w-[400px]">
-                    <div className="mt-[20px]">
-                        <span className="text-[30px]">Login</span>
+        <div className="min-h-screen flex">
+            {/* Left Side - Login Form */}
+            <div className="w-1/2 flex justify-center items-center bg-white p-8">
+                <div className="w-[500px]">
+                    <div className="mb-10">
+                        <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                            Welcome Back!
+                        </h2>
+                        <p className="text-gray-500 mt-2">
+                            Sign in to continue your journey
+                        </p>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex p-[8px] border ml-[30px] mt-[30px] mr-[30px] rounded-full">
-                            <img className="pl-[45px]" src={image803} alt="" />
-                            <span className="ml-[10px] text-[17px]">
-                                Continue with Facebook
-                            </span>
-                        </div>
-
-                        <div className="p-[8px] border ml-[30px] mt-[10px] mr-[30px] ">
-                            <LoginSocialGoogle className={"social-container"}
-                                               client_id="1058082993437-6iqr2cmlkkhet731flq206f12st8s7to.apps.googleusercontent.com"
-                                               onLogoutFailure={onLogoutFailure}
-                                               onLoginStart={onLoginStart}
-                                               onLogoutSuccess={onLogoutSuccess}
-                                               onResolve={onLoginSuccessGoogle}
-                                               onReject={handleGoogleReject}
-                                               scope="openid profile email"
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-4">
+                            <LoginSocialGoogle
+                                client_id="1058082993437-6iqr2cmlkkhet731flq206f12st8s7to.apps.googleusercontent.com"
+                                onLogoutFailure={onLogoutFailure}
+                                onLoginStart={onLoginStart}
+                                onLogoutSuccess={onLogoutSuccess}
+                                onResolve={onLoginSuccessGoogle}
+                                onReject={handleGoogleReject}
+                                scope="openid profile email"
                             >
                                 <GoogleLoginButton
-                                    style={{width: "100%", height: "45px",borderRadius:"20px"}}
-                                    text={" Continue with Google"}/>
+                                    style={{
+                                        width: "100%",
+                                        height: "50px",
+                                        borderRadius: "25px",
+                                        paddingLeft: "45px",
+                                        background:
+                                            "linear-gradient(to right, #4285F4, #34A853)",
+                                        color: "white",
+                                        fontWeight: "bold",
+                                        fontSize: "16px",
+                                        textAlign: "center",
+                                        boxShadow:
+                                            "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                                    }}
+                                    text="Continue with Google"
+                                />
                             </LoginSocialGoogle>
 
+                            <LoginSocialFacebook
+                                client_id="your-facebook-app-client-id"
+                                onLogoutFailure={onLogoutFailure}
+                                onLoginStart={onLoginStart}
+                                onLogoutSuccess={onLogoutSuccess}
+                                onResolve={(data) =>
+                                    console.log(
+                                        "Facebook Login Success: ",
+                                        data
+                                    )
+                                }
+                                onReject={(err) =>
+                                    console.error("Facebook Login Error: ", err)
+                                }
+                            >
+                                <FacebookLoginButton
+                                    style={{
+                                        width: "100%",
+                                        height: "50px",
+                                        borderRadius: "25px",
+                                        paddingLeft: "45px",
+                                        background:
+                                            "linear-gradient(to right, #3b5998, #8b9dc3)",
+                                        color: "white",
+                                        fontWeight: "bold",
+                                        fontSize: "16px",
+                                        textAlign: "center",
+                                        boxShadow:
+                                            "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                                    }}
+                                    text="Continue with Facebook"
+                                />
+                            </LoginSocialFacebook>
                         </div>
 
-                        <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                            <img className="pl-[45px]" src={image804} alt="" />
-                            {/* <FaGithub /> */}
-                            <span className="ml-[10px] text-[17px]">
-                                Continue with Github
+                        <div className="flex items-center my-6">
+                            <div className="flex-1 border-t border-gray-300"></div>
+                            <span className="px-4 text-gray-500 text-sm font-medium">
+                                OR
                             </span>
+                            <div className="flex-1 border-t border-gray-300"></div>
                         </div>
 
-                        <div className="mt-[15px]">
-                            <span>OR</span>
+                        <div className="space-y-4">
+                            <div className="flex items-center p-3 border border-gray-200 hover:border-blue-400 rounded-full bg-white shadow-sm focus-within:shadow-md transition-all duration-200">
+                                <FaRegUserCircle className="ml-4 text-gray-400 text-xl" />
+                                <input
+                                    className="ml-3 w-full outline-none text-gray-700"
+                                    onChange={inputHandle}
+                                    value={state.username}
+                                    required
+                                    type="text"
+                                    name="username"
+                                    placeholder="Username & Email"
+                                />
+                            </div>
+
+                            <div className="flex items-center p-3 border border-gray-200 hover:border-blue-400 rounded-full bg-white shadow-sm focus-within:shadow-md transition-all duration-200">
+                                <RiLockPasswordLine className="ml-4 text-gray-400 text-xl" />
+                                <input
+                                    className="ml-3 w-full outline-none text-gray-700"
+                                    onChange={inputHandle}
+                                    value={state.password}
+                                    required
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                />
+                            </div>
                         </div>
 
-                        <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                            <FaRegUserCircle className="ml-[5px] mt-[4px]" />
-                            <input
-                                className="ml-[10px] w-[275px] outline-none"
-                                onChange={inputHandle}
-                                value={state.username}
-                                required
-                                type="text"
-                                name="username"
-                                id="username"
-                                placeholder="Username"
-                            />
+                        <div className="text-right">
+                            <Link
+                                className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                                to="/resetPassword"
+                            >
+                                Forgot password?
+                            </Link>
                         </div>
 
-                        <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                            <RiLockPasswordLine className="ml-[5px] mt-[4px]" />
-                            <input
-                                className="ml-[10px] w-[275px] outline-none"
-                                type="password"
-                                placeholder="Password"
-                                name="password"
-                                id="password"
-                                onChange={inputHandle}
-                                value={state.password}
-                                required
-                            />
-                        </div>
-
-                        <Link className="ml-[200px]" to="">
-                            Forgot password?
-                        </Link>
-
-                        <div className="p-[8px] border ml-[30px] mt-[3px] mr-[30px] rounded-full bg-[#FF5B26] cursor-pointer">
+                        <div className="mt-6">
                             <button
-                                disabled={loader ? true : false}
+                                disabled={loader}
                                 type="submit"
-                                className="w-[280px] text-[17px] font-[600] text-[#FFF]"
+                                className="w-full p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-lg transform hover:translate-y-[-1px] transition-all duration-200"
                             >
                                 {loader ? (
                                     <HashLoader
-                                        color="#fff" // Màu của vòng tải
-                                        size={18} // Kích thước của vòng tải (pixel)
-                                        speedMultiplier={1} // Tốc độ quay
+                                        color="#fff"
+                                        size={18}
+                                        speedMultiplier={1}
                                     />
                                 ) : (
                                     "Login"
@@ -183,10 +218,13 @@ const Login = () => {
                         </div>
                     </form>
 
-                    <div className="mt-[7px] pb-[30px]">
+                    <div className="mt-8 text-center text-gray-600">
                         <span>
-                            Don’t a have account?{" "}
-                            <Link className="font-bold" to="/register">
+                            Don't have an account?{" "}
+                            <Link
+                                className="font-semibold text-blue-600 hover:text-blue-700"
+                                to="/register"
+                            >
                                 Register
                             </Link>
                         </span>
@@ -194,6 +232,103 @@ const Login = () => {
                 </div>
             </div>
 
+            {/* Right Side - Image and Content */}
+            <div className="w-1/2 bg-gradient-to-br from-blue-500 to-purple-600 flex flex-col justify-center items-center text-white p-8">
+                <div className="max-w-md text-center">
+                    <div className="flex">
+                        <h1 className="text-4xl font-bold mb-6 flex mt-5">
+                            Welcome to{" "}
+                        </h1>
+                        <div className="flex items-center space-x-3 ml-5">
+                            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                                <span
+                                    className="text-3xl font-bold text-blue-600 cursor-pointer"
+                                    onClick={() => navigate("/")}
+                                >
+                                    P
+                                </span>
+                            </div>
+                            <span
+                                className="text-white text-2xl cursor-pointer font-bold"
+                                onClick={() => navigate("/")}
+                            >
+                                hegon
+                            </span>
+                        </div>
+                    </div>
+                    <p className="text-lg mb-8">
+                        Your trusted companion for discovering amazing
+                        destinations and planning unforgettable journeys.
+                    </p>
+                    <ul className="space-y-4 text-left list-none">
+                        <li className="flex items-center">
+                            <svg
+                                className="w-6 h-6 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                            Discover unique destinations
+                        </li>
+                        <li className="flex items-center">
+                            <svg
+                                className="w-6 h-6 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                            Get personalized travel recommendations
+                        </li>
+                        <li className="flex items-center">
+                            <svg
+                                className="w-6 h-6 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                            Access exclusive travel deals
+                        </li>
+                        <li className="flex items-center">
+                            <svg
+                                className="w-6 h-6 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                            Connect with fellow travelers
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     );
 };
 

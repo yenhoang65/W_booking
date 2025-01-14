@@ -78,7 +78,7 @@ export const updateInfo = createAsyncThunk(
 
 export const googleLogin = createAsyncThunk(
     "auth/google",
-    async (tokenId , { rejectWithValue, fulfillWithValue }) => {
+    async (tokenId, { rejectWithValue, fulfillWithValue }) => {
         try {
             const response = await api.post(`/auth/google?token=${tokenId}`);
             localStorage.setItem("token", response.data.token);

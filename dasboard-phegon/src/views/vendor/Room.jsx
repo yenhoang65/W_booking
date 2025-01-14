@@ -418,9 +418,9 @@ const Room = () => {
                                             RoomDescription
                                         </th>
 
-                                        <th scope="col" className="py-3 px-4">
+                                        {/* <th scope="col" className="py-3 px-4">
                                             Status
-                                        </th>
+                                        </th> */}
                                         <th scope="col" className="py-3 px-4">
                                             Action
                                         </th>
@@ -462,7 +462,13 @@ const Room = () => {
                                                 scope="row"
                                                 className="py-3 px-4 font-medium whitespace-nowrap"
                                             >
-                                                {room.roomPrice}
+                                                {new Intl.NumberFormat(
+                                                    "vi-VN",
+                                                    {
+                                                        style: "currency",
+                                                        currency: "VND",
+                                                    }
+                                                ).format(room.roomPrice)}
                                             </td>
 
                                             <td
@@ -481,12 +487,12 @@ const Room = () => {
                                                 )} */}
                                             </td>
 
-                                            <td
+                                            {/* <td
                                                 scope="row"
                                                 className="py-3 px-4 font-medium whitespace-nowrap"
                                             >
                                                 {room.status}
-                                            </td>
+                                            </td> */}
                                             <td
                                                 scope="row"
                                                 className="py-3 px-4 font-medium whitespace-nowrap"

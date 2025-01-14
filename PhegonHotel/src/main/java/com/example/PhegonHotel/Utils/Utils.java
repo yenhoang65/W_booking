@@ -6,6 +6,7 @@ import com.example.PhegonHotel.Entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.security.SecureRandom;
 
@@ -23,6 +24,15 @@ public class Utils {
             stringBuilder.append(randomChar);
         }
         return stringBuilder.toString();
+    }
+
+    public static String generateOtp(int length) {
+        Random random = new Random();
+        StringBuilder otp = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            otp.append(random.nextInt(6)); // Tạo số ngẫu nhiên từ 0-6
+        }
+        return otp.toString();
     }
 
     public static UserDTO mapUserEntityToUserDTO(User user) {
@@ -66,7 +76,7 @@ public class Utils {
         roomDTO.setRoomPrice(room.getRoomPrice());
         roomDTO.setRoomPhotoUrl(room.getRoomPhotoUrl());
         roomDTO.setRoomDescription(room.getRoomDescription());
-
+        roomDTO.setHotel(mapHotelEntityToHotelDTO(room.getHotel()));
         if (room.getHotel() != null) {
             HotelDTO hotelDTO = new HotelDTO();
             hotelDTO.setId(room.getHotel().getId());

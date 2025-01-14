@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HotelService implements IHotelService {
@@ -244,6 +245,47 @@ public class HotelService implements IHotelService {
         }
         return responseDTO;
     }
+
+    @Override
+    public ResponseDTO getRoomsByNation(String nation) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            // Tìm tất cả các khách sạn thuộc nation cụ thể
+            List<Hotel> hotels = hotelRepo.findByNation(nation);
+
+            // Kiểm tra nếu không có khách sạn nào
+            if (hotels.isEmpty()) {
+                responseDTO.setStatusCode(404);
+                responseDTO.setMessage("Không tìm thấy khách sạn nào thuộc quốc gia: " + nation);
+                return responseDTO;
+            }
+
+            // Lấy tất cả các phòng thuộc các khách sạn đó
+            List<Room> rooms = hotels.stream()
+                    .flatMap(hotel -> hotel.getRooms().stream())
+                    .collect(Collectors.toList());
+
+            // Kiểm tra nếu không có phòng nào
+            if (rooms.isEmpty()) {
+                responseDTO.setStatusCode(404);
+                responseDTO.setMessage("Không tìm thấy phòng nào trong các khách sạn thuộc quốc gia: " + nation);
+                return responseDTO;
+            }
+
+            // Chuyển đổi danh sách phòng thành DTO
+            List<RoomDTO> roomDTOList = Utils.mapRoomListEntityToRoomListDTO(rooms);
+
+            responseDTO.setStatusCode(200);
+            responseDTO.setMessage("Phòng được lấy thành công");
+            responseDTO.setRoomList(roomDTOList);
+
+        } catch (Exception e) {
+            responseDTO.setStatusCode(500);
+            responseDTO.setMessage("Lỗi khi lấy phòng theo quốc gia: " + e.getMessage());
+        }
+        return responseDTO;
+    }
+
 
     @Override
     public List<String> getAllHotelNames() {

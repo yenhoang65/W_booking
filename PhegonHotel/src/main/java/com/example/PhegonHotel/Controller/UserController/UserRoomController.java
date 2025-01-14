@@ -2,6 +2,7 @@ package com.example.PhegonHotel.Controller.UserController;
 
 import com.example.PhegonHotel.Dto.ResponseDTO;
 import com.example.PhegonHotel.Service.Interface.IBookingService;
+import com.example.PhegonHotel.Service.Interface.IHotelService;
 import com.example.PhegonHotel.Service.Interface.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,6 +17,9 @@ import java.util.List;
 public class UserRoomController {
     @Autowired
     private IRoomService roomService;
+
+    @Autowired
+    private IHotelService hotelService;
 
     @Autowired
     private IBookingService iBookingService;
@@ -59,4 +63,15 @@ public class UserRoomController {
         return ResponseEntity.status(responseDTO.getStatusCode()).body(responseDTO);
     }
 
+        @GetMapping("/top5-most-booked")
+    public ResponseEntity<ResponseDTO> getTop5MostBookedRooms() {
+        ResponseDTO responseDTO = roomService.getTop5MostBookedRooms();
+        return ResponseEntity.status(responseDTO.getStatusCode()).body(responseDTO);
+    }
+
+    @GetMapping("/rooms-by-nation")
+    public ResponseEntity<ResponseDTO> getRoomsByNation(@RequestParam String nation) {
+        ResponseDTO responseDTO = hotelService.getRoomsByNation(nation);
+        return ResponseEntity.status(responseDTO.getStatusCode()).body(responseDTO);
+    }
 }

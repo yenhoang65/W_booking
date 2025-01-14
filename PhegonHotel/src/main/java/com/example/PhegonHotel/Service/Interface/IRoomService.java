@@ -28,5 +28,6 @@ public interface IRoomService {
 
     ResponseDTO getAllAvailableRooms();
 
+    ResponseDTO getTop5MostBookedRooms();
 
 }

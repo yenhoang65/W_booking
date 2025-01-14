@@ -16,6 +16,10 @@ import com.example.PhegonHotel.Service.AwsS3Service;
 import com.example.PhegonHotel.Service.Interface.IRoomService;
 import com.example.PhegonHotel.Utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageRequest; // PageRequest của Spring Data
+import org.springframework.data.domain.Pageable;    // Pageable của Spring Data
+
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -286,4 +290,28 @@ public class RoomService implements IRoomService {
         }
         return responseDTO;
     }
+
+    @Override
+    public ResponseDTO getTop5MostBookedRooms() {
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        try {
+            Pageable top5 = PageRequest.of(0, 5); // Đúng import
+            List<Room> topRooms = roomRepo.findTop5RoomsByBookingCount(top5);
+
+            List<RoomDTO> roomDTOList = Utils.mapRoomListEntityToRoomListDTO(topRooms);
+
+            responseDTO.setStatusCode(200);
+            responseDTO.setMessage("Top 5 most booked rooms retrieved successfully");
+            responseDTO.setRoomList(roomDTOList);
+        } catch (Exception e) {
+            responseDTO.setStatusCode(500);
+            responseDTO.setMessage("Error retrieving top 5 rooms: " + e.getMessage());
+        }
+
+        return responseDTO;
+    }
+
+
+
 }

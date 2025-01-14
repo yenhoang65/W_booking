@@ -10,12 +10,18 @@ public class EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    public void sendEmail(String from, String subject, String body) {
+    /**
+
+     * @param to      Email người nhận
+     * @param subject Tiêu đề email
+     * @param body    Nội dung email
+     */
+    public void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from); // Email của người gửi
-        message.setTo("hoangsyyen123@gmail.com");
+        message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
+        message.setFrom("hoangsyyen123@gmail.com"); // Email của người gửi (cấu hình trong application.properties)
 
         // Gửi email
         emailSender.send(message);

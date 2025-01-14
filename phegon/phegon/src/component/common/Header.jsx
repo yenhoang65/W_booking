@@ -104,7 +104,7 @@ const Header = () => {
                     </ul>
                 </div>
             </nav>
-            <section className="relative bg-[#003b95] pt-[20px] pb-[30px] h-[330px] text-[#FFF] ">
+            <section className="relative bg-[#003b95] pt-[20px] pb-[30px] h-[100px] text-[#FFF] ">
                 <div className="w-[1150px] m-auto flex flex-wrap gap-[30px] cursor-pointer">
                     <div className="flex gap-3 font-semibold items-center border px-4 py-2 rounded-full border-white">
                         <MdOutlineBedroomChild className="text-[20px]" /> Stay
@@ -129,7 +129,7 @@ const Header = () => {
                     </div>
                 </div>
 
-                <div className="py-[64px] w-[1150px] m-auto ">
+                {/* <div className="py-[64px] w-[1150px] m-auto ">
                     <h3 className="text-[48px] font-[700]">
                         Find your next property
                     </h3>
@@ -140,7 +140,7 @@ const Header = () => {
 
                 <div className="absolute left-[180px] -bottom-[40px]">
                     <RoomSearch handleSearchResult={handleSearchResult} />
-                </div>
+                </div> */}
             </section>
         </div>
     );

@@ -241,4 +241,42 @@ public class BookingService implements IBookingService {
                                 && bookingRequest.getCheckOutDate().equals(bookingRequest.getCheckInDate()))
                 );
     }
+
+    @Override
+    public ResponseDTO getBookingsByUser() {
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        try {
+            // Lấy thông tin người dùng hiện tại từ SecurityContext
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Lấy thông tin người dùng từ database
+            User currentUser = userRepo.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new OurException("Người dùng không tồn tại"));
+
+            // Lấy danh sách các đơn đặt phòng thuộc về người dùng này
+            List<Booking> userBookings = bookingRepo.findByUserId(currentUser.getId());
+
+            // Chuyển đổi danh sách Booking sang BookingDTO
+            List<BookingDTO> bookingDTOList = userBookings.stream()
+                    .map(Utils::mapBookingEntityToBookingDTO)
+                    .collect(Collectors.toList());
+
+            // Trả kết quả
+            responseDTO.setStatusCode(200);
+            responseDTO.setMessage("Danh sách đặt phòng đã được lấy thành công");
+            responseDTO.setBookingList(bookingDTOList);
+
+        } catch (OurException e) {
+            responseDTO.setStatusCode(404);
+            responseDTO.setMessage(e.getMessage());
+        } catch (Exception e) {
+            responseDTO.setStatusCode(500);
+            responseDTO.setMessage("Lỗi khi lấy danh sách đặt phòng: " + e.getMessage());
+        }
+
+        return responseDTO;
+    }
+
 }

@@ -104,7 +104,6 @@ public class GoogleAuthService {
             newUser.setStatus("DANG_SU_DUNG");
             newUser.setRole("USER");
             newUser.setPhoneNumber("0987654321");
-            // Mật khẩu mặc định hoặc có thể cập nhật
             String password = "123";
             newUser.setPassword(passwordEncoder.encode(password));
             userRepo.save(newUser);

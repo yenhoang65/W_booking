@@ -1,6 +1,3 @@
-import Rectangle6083 from "./../../../../public/image/Rectangle6083.png";
-import image929 from "./../../../../public/image/image929.png";
-import scroll from "./../../../../public/image/Scroll.svg";
 import Footer from "../../common/footer";
 import { IoMdSearch } from "react-icons/io";
 import HotelTrip from "./HotelTrip";
@@ -8,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelsAll } from "../../store/reducer/hotelReducer";
 import { useEffect } from "react";
+import Header from "../../common/header";
 
 function Hotel() {
     const dispatch = useDispatch();
@@ -18,35 +16,7 @@ function Hotel() {
     }, []);
     return (
         <>
-            <div className="bg-[#FFF9E5] py-[60px]">
-                <div className="m-auto w-[1150px] flex">
-                    <div>
-                        <div className="ml-[40px] mt-[10px] flex leading-[80px]">
-                            <div className="relative">
-                                <h1 className="text-[80px] font-[600]">
-                                    Explore best <br /> destinations <br /> of
-                                    the world
-                                </h1>
-                            </div>
-                        </div>
-                        <div className="ml-[40px] mt-[10px]">
-                            <h4>
-                                Discover the world with local experts, one
-                                tailor-made trip at a time.
-                                <br /> One planet. Endless possibilities. The
-                                most amazing destinations in the
-                                <br /> world are waiting for you.
-                            </h4>
-                        </div>
-                        <div className="ml-[40px] mt-[30px]">
-                            <img src={scroll} alt="" />
-                        </div>
-                    </div>
-                    <div className="ml-[100px] w-[550px]">
-                        <img className="h-[400px]" src={Rectangle6083} alt="" />
-                    </div>
-                </div>
-            </div>
+            <Header />
 
             <div className="m-auto w-[1150px]">
                 <div className="flex justify-center mt-[30px] py-4">

@@ -24,7 +24,7 @@ const RoomTrip = ({
                 <div className="flex">
                     <div>
                         <div className="flex">
-                            <h2 className="text-[22px] font-bold line-clamp-2 text-[#003b95] bg-slate-500 w-[350px]">
+                            <h2 className="text-[22px] font-bold line-clamp-2 text-[#003b95] w-[350px]">
                                 {roomPlace}
                             </h2>
                             <div className="w-[100px] ml-2 ">
@@ -70,20 +70,13 @@ const RoomTrip = ({
                             </div>
                         </div>
                     </div>
-
-                    {/* <div className=" gap-[10px] w-[100px] ml-2 ">
-                        <div className="">
-                            <div className="flex items-center gap-[5px] px-[12px] py-[4px] rounded-full bg-[#FFF7DA]">
-                                <img src={star} alt="" className="ml-3" />
-                                4.5
-                            </div>
-                            <span>(3.9K Reviews)</span>
-                        </div>
-                    </div> */}
                 </div>
                 <div className="">
-                    <span className="text-[20px] font-bold text-red-300 flex justify-end">
-                        {roomPrice} VNĐ
+                    <span className="text-[20px] font-bold  text-[#3E7EFF] flex justify-end">
+                        {roomPrice.toLocaleString("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                        })}
                     </span>
                 </div>
             </div>

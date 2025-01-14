@@ -3,7 +3,7 @@ import ct from "../../../public/image/ct.jpg";
 const Footer = () => {
     return (
         <footer>
-            <div className="footer bg-[#FFF9E5] ">
+            <div className="footer bg-[#003b95] text-[#fff]">
                 <div className=" w-[1200px] h-[300px] m-auto flex gap-[180px] pt-[20px] pb-[20px]">
                     <div className="f1 ">
                         <h6 className="font-bold text-[20px]">Booking</h6>
@@ -51,12 +51,6 @@ const Footer = () => {
                                     Subject
                                 </button>
                             </div>
-
-                            <p className="mt-[20px] font-bold text-[17px] pl-[5px]">
-                                Flow Us
-                            </p>
-
-                            <img className="h-[40px]" src={ct} alt="" />
                         </div>
                     </div>
                 </div>

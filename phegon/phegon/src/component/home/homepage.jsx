@@ -21,13 +21,10 @@ import Discover from "./component/Discover";
 import BlogHome from "./component/BlogHome";
 import ShareYourLove from "./component/ShareYourLove";
 import TravelMatter from "./component/TravelMatter";
-import { MdOutlineBedroomChild } from "react-icons/md";
-import { PiAirplaneInFlightFill } from "react-icons/pi";
-import { GiWorld } from "react-icons/gi";
-import { FaCar, FaTaxi } from "react-icons/fa";
-import { FaMapLocationDot } from "react-icons/fa6";
+
 import Endow from "./component/Endow";
 import Favorite from "./component/Favorite";
+import Header from "../common/header";
 
 const HomePage = () => {
     const [roomSearchResults, setRoomSearchResults] = useState([]);
@@ -77,7 +74,17 @@ const HomePage = () => {
                     <RoomSearch handleSearchResult={handleSearchResult} />
                 </div>
             </section> */}
-
+            <Header />
+            <div className="bg-[#003b95]">
+                <div className="pb-10 text-[#fff] w-[1150px] m-auto ">
+                    <h3 className="text-[48px] font-[700]">
+                        Find your next property
+                    </h3>
+                    <p className="text-[24px] pt-4">
+                        Find hotel deals, home stays and more...
+                    </p>
+                </div>
+            </div>
             <section className="w-[1150px] m-auto mt-[100px] pb-[40px]">
                 <Title title="Endow" desc="" />
 
@@ -95,7 +102,7 @@ const HomePage = () => {
 
             <BlogHome />
 
-            <ShareYourLove />
+            {/* <ShareYourLove /> */}
 
             <TravelMatter />
 

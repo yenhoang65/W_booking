@@ -1,4 +1,5 @@
 import Booking from "../../views/vendor/Booking";
+import Dashboard from "../../views/vendor/Dashboard";
 import Hotel from "../../views/vendor/Hotel";
 import Room from "../../views/vendor/Room";
 import VendorProfile from "../../views/vendor/VendorProfile";
@@ -6,7 +7,7 @@ import VendorProfile from "../../views/vendor/VendorProfile";
 export const vendorRoutes = [
     {
         path: "/vendor/dashboard",
-        element: "vendor dashboard",
+        element: <Dashboard />,
         role: "VENDOR",
         status: "active",
     },

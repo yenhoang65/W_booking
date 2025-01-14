@@ -21,4 +21,7 @@ public interface IHotelService {
     ResponseDTO getHotelById(Long hotelId);
 
     List<String> getAllHotelNames();
+
+    ResponseDTO getRoomsByNation(String nation);
+
 }

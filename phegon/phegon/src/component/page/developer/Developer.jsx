@@ -7,6 +7,7 @@ import {
     clearContactState,
     submitContactRequest,
 } from "../../store/reducer/contactReducer";
+import Header from "../../common/header";
 function Developer() {
     const dispatch = useDispatch();
     const { loading, success, error } = useSelector((state) => state.contact);
@@ -34,6 +35,7 @@ function Developer() {
     }, [success, error, dispatch]);
     return (
         <>
+            <Header />
             <div className="w-[1000px] m-auto flex justify-between">
                 <div>
                     <img className="mt-[230px]" src={image938} alt="" />

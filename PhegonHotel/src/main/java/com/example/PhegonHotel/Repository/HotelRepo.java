@@ -14,5 +14,5 @@ public interface HotelRepo extends JpaRepository<Hotel, Long> {
 
     List<Hotel> findByCreatorId(Long creatorId);
 
-
+    List<Hotel> findByNation(String nation);
 }

@@ -3,7 +3,8 @@ package com.example.PhegonHotel.Repository;
 import com.example.PhegonHotel.Entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,4 +27,11 @@ public interface RoomRepo extends JpaRepository<Room,Long> {
 
     List<Room> findByHotelIdIn(List<Long> hotelIds);
 
+    @Query("SELECT r FROM Room r JOIN Booking b ON r.id = b.room.id " +
+            "GROUP BY r.id " +
+            "ORDER BY COUNT(b.id) DESC")
+    List<Room> findTop5RoomsByBookingCount(Pageable pageable);
+
+    long countByHotelId(Long hotelId);
+    long countByHotelIdIn(java.util.List<Long> hotelIds);
 }

@@ -4,6 +4,7 @@ import hotelReducer from "./reducer/hotelReducer";
 import roomReducer from "./reducer/roomReducer";
 import emailReducer from "./reducer/emailReducer";
 import contactReducer from "./reducer/contactReducer";
+import articleReducer from "./reducer/articleReducer";
 
 const rootReducer = {
     auth: authReducer,
@@ -12,6 +13,7 @@ const rootReducer = {
     booking: bookingReducer,
     email: emailReducer,
     contact: contactReducer,
+    article: articleReducer,
 };
 
 export default rootReducer;

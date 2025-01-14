@@ -31,7 +31,7 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(register(formData)); // Dispatch action register
+        dispatch(register(formData));
     };
 
     useEffect(() => {
@@ -41,98 +41,156 @@ const Register = () => {
             navigate("/login");
         }
     }, [successMessage]);
+
     return (
-        <div className="flex justify-center items-center text-center">
-            <div className="mt-[40px] border w-[400px]">
-                <div className="mt-[20px]">
-                    <span className="text-[30px]">Register</span>
+        <div className="min-h-screen flex">
+            {/* Left Side - Banner */}
+            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-r from-blue-600 to-purple-600 p-12 flex-col justify-between">
+                <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <span
+                            className="text-3xl font-bold text-blue-600 cursor-pointer"
+                            onClick={() => navigate("/")}
+                        >
+                            P
+                        </span>
+                    </div>
+                    <span
+                        className="text-white text-2xl cursor-pointer font-bold"
+                        onClick={() => navigate("/")}
+                    >
+                        hegon
+                    </span>
                 </div>
 
-                <form onSubmit={handleSubmit}>
-                    <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                        <FaRegUserCircle className="ml-[5px] mt-[4px]" />
-                        <input
-                            className="ml-[10px] w-[275px] outline-none"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleInputChange}
-                            type="text"
-                            required
-                            placeholder="Username"
-                        />
+                <div className="space-y-6">
+                    <h1 className="text-4xl font-bold text-white leading-tight">
+                        Discover Amazing Places <br />
+                        With PhuotLove
+                    </h1>
+                    <p className="text-white/80 text-lg">
+                        Join our community of travelers and explorers. Share
+                        experiences, find new destinations, and make memories
+                        that last forever.
+                    </p>
+                    <div className="flex space-x-4">
+                        <div className="bg-white/10 p-4 rounded-lg">
+                            <h3 className="text-white font-bold text-xl">
+                                10K+
+                            </h3>
+                            <p className="text-white/70">Active Users</p>
+                        </div>
+                        <div className="bg-white/10 p-4 rounded-lg">
+                            <h3 className="text-white font-bold text-xl">
+                                500+
+                            </h3>
+                            <p className="text-white/70">Destinations</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="text-white/60 text-sm">
+                    © 2024 PhuotLove. All rights reserved.
+                </div>
+            </div>
+
+            {/* Right Side - Registration Form */}
+            <div className="w-full lg:w-1/2 p-8 lg:p-12 flex items-center justify-center">
+                <div className="max-w-md w-full space-y-8">
+                    <div>
+                        <h2 className="text-3xl font-bold text-gray-900">
+                            Create your account
+                        </h2>
+                        <p className="mt-2 text-gray-600">
+                            Join us and start your journey today!
+                        </p>
                     </div>
 
-                    <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                        <RiLockPasswordLine className="ml-[5px] mt-[4px]" />
-                        <input
-                            className="ml-[10px] w-[275px] outline-none"
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Password"
-                        />
-                    </div>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div className="flex items-center p-3 border border-gray-200 hover:border-blue-400 rounded-full bg-white shadow-sm focus-within:shadow-md transition-all duration-200">
+                            <FaRegUserCircle className="ml-3 text-gray-400 text-xl" />
+                            <input
+                                className="ml-3 w-full outline-none text-gray-700"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleInputChange}
+                                type="text"
+                                required
+                                placeholder="Username"
+                            />
+                        </div>
 
-                    <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                        <MdDriveFileRenameOutline className="ml-[5px] mt-[4px]" />
-                        <input
-                            className="ml-[10px] w-[275px] outline-none"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            required
-                            type="text"
-                            placeholder="Name"
-                        />
-                    </div>
+                        <div className="flex items-center p-3 border border-gray-200 hover:border-blue-400 rounded-full bg-white shadow-sm focus-within:shadow-md transition-all duration-200">
+                            <RiLockPasswordLine className="ml-3 text-gray-400 text-xl" />
+                            <input
+                                className="ml-3 w-full  outline-none text-gray-700"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange}
+                                type="password"
+                                required
+                                placeholder="Password"
+                            />
+                        </div>
 
-                    <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                        <IoIosPhonePortrait className="ml-[5px] mt-[4px]" />
-                        <input
-                            className="ml-[10px] w-[275px] outline-none"
-                            name="phoneNumber"
-                            value={formData.phoneNumber}
-                            onChange={handleInputChange}
-                            required
-                            type="text"
-                            placeholder="Phone"
-                        />
-                    </div>
+                        <div className="flex items-center p-3 border border-gray-200 hover:border-blue-400 rounded-full bg-white shadow-sm focus-within:shadow-md transition-all duration-200">
+                            <MdDriveFileRenameOutline className="ml-3 text-gray-400 text-xl" />
+                            <input
+                                className="ml-3 w-full outline-none text-gray-700"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                type="text"
+                                required
+                                placeholder="Full Name"
+                            />
+                        </div>
 
-                    <div className="flex p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full">
-                        <MdOutlineEmail className="ml-[5px] mt-[4px]" />
-                        <input
-                            className="ml-[10px] w-[275px] outline-none"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            type="email"
-                            placeholder="Email"
-                        />
-                    </div>
+                        <div className="flex items-center p-3 border border-gray-200 hover:border-blue-400 rounded-full bg-white shadow-sm focus-within:shadow-md transition-all duration-200">
+                            <IoIosPhonePortrait className="ml-3 text-gray-400 text-xl" />
+                            <input
+                                className="ml-3 w-full outline-none text-gray-700"
+                                name="phoneNumber"
+                                value={formData.phoneNumber}
+                                onChange={handleInputChange}
+                                type="text"
+                                required
+                                placeholder="Phone Number"
+                            />
+                        </div>
 
-                    {/* <Link className='ml-[200px]' to="">Forgot password?</Link> */}
+                        <div className="flex items-center p-3 border border-gray-200 hover:border-blue-400 rounded-full bg-white shadow-sm focus-within:shadow-md transition-all duration-200">
+                            <MdOutlineEmail className="ml-3 text-gray-400 text-xl" />
+                            <input
+                                className="ml-3 w-full outline-none text-gray-700"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                type="email"
+                                placeholder="Email Address"
+                            />
+                        </div>
 
-                    <div className="p-[8px] border ml-[30px] mt-[10px] mr-[30px] rounded-full bg-[#FF5B26] cursor-pointer">
                         <button
                             type="submit"
-                            className="w-[280px] text-[17px] font-[600] text-[#FFF]"
+                            className="w-full p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-lg transform hover:translate-y-[-1px] transition-all duration-200"
                             disabled={loader}
                         >
-                            {loader ? "Loading..." : "Register"}
+                            {loader ? "Creating Account..." : "Create Account"}
                         </button>
-                    </div>
-                </form>
+                    </form>
 
-                <div className="mt-[7px] pb-[30px]">
-                    <span>
-                        Have a account?{" "}
-                        <Link className="font-bold" to="/login">
-                            Login
-                        </Link>
-                    </span>
+                    <div className="text-center text-gray-600">
+                        <span>
+                            Already have an account?{" "}
+                            <Link
+                                className="font-semibold text-blue-600 hover:text-blue-700"
+                                to="/login"
+                            >
+                                Sign in
+                            </Link>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

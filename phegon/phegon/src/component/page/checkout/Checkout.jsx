@@ -15,6 +15,7 @@ import { getRoomById } from "../../store/reducer/roomReducer";
 import { resetBookingState } from "../../store/reducer/bookingReducer";
 import toast from "react-hot-toast";
 import { ApiPayment } from "../../store/ApiPayment.jsx";
+import Header from "../../common/header.jsx";
 
 const Checkout = () => {
     const dispatch = useDispatch();
@@ -153,7 +154,8 @@ const Checkout = () => {
     return (
         <>
             <section>
-                <div className="w-[1060px] m-auto">
+                <Header />
+                <div className="w-[1060px] m-auto pb-10">
                     <div className="pt-5 pb-5 flex">
                         <div className="border h-[30px]  w-[30px] bg-[#006ce4] rounded-full py-[5px]">
                             <IoIosArrowDown className="ml-[4px] text-[20px] text-[#fff]" />
@@ -263,10 +265,14 @@ const Checkout = () => {
                             <div className="flex justify-between mt-6  bg-[#ebf3ff] border border-[#bad4f7]  w-[350px]">
                                 <h4 className="pl-5 font-[600] py-3">Price:</h4>
                                 <h4 className="pr-5 font-[600] py-3 font-sans">
-                                    {checkInDate && checkOutDate
-                                        ? totalPrice
-                                        : room?.roomPrice}{" "}
-                                    VNĐ
+                                    {new Intl.NumberFormat("vi-VN", {
+                                        style: "currency",
+                                        currency: "VND",
+                                    }).format(
+                                        checkInDate && checkOutDate
+                                            ? totalPrice
+                                            : room?.roomPrice
+                                    )}
                                 </h4>
                             </div>
                             <div className=" border border-[#bad4f7] mt-6 h-[230px] w-[350px]">
@@ -355,10 +361,10 @@ const Checkout = () => {
                                     <CiUser className="ml-3 mt-3 text-[#0096c7]" />
                                     <h3 className="text-[17px] font-sans mt-[10px] ml-2">
                                         <Link to="" className="text-[#0096c7]">
-                                            Đăng Nhập{" "}
+                                            Sign-in{" "}
                                         </Link>
-                                        để đặt phòng với thông tin đã lưu của
-                                        bạn
+                                        to make a reservation with your saved
+                                        information Friend
                                     </h3>
                                 </h4>
                             </div>
@@ -366,7 +372,7 @@ const Checkout = () => {
                             <div className="border bg-[#ebf3ff]  border-[#ced4da] mt-8  w-[650px] rounded-lg">
                                 <h3 className="mt-5 ml-5">
                                     Almost done! Just complete the information
-                                    <strong className="text-red-600">
+                                    <strong className="text-blue-600">
                                         (required)
                                     </strong>
                                 </h3>
@@ -431,7 +437,7 @@ const Checkout = () => {
                             <div className="mt-6 ml-[500px]">
                                 <button
                                     onClick={submit_booking}
-                                    className="bg-[#FF5B26] hover:border-[2px] font-[600] hover:bg-white hover:text-black text-[#FFF] py-2 px-4 rounded-full rounded-tl-3xl"
+                                    className="bg-[#006ce4] hover:border-[2px] font-[600] hover:bg-white hover:text-black text-[#FFF] py-2 px-4 rounded-full rounded-tl-3xl"
                                 >
                                     Confirmation
                                 </button>

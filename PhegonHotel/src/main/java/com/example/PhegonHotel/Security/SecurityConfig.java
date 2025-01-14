@@ -43,8 +43,28 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Cập nhật cách vô hiệu hóa CSRF
                 .cors(Customizer.withDefaults())
 
+                // Cho phép Swagger truy cập mà không cần xác thực
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/**", "/users/hotel/**","/users/rooms/**", "/users/bookings/**", "/oauth2/**","/payment/**").permitAll()
+                        .requestMatchers(
+                                "/auth/**",
+                        "/auth/forgot-password",
+                                "/auth/verify-otp",
+                                "/api/dashboard",
+                                "/auth/login",
+                                "/auth/reset-password",
+                                "/users/hotel/**",
+                                "/users/rooms/**",
+                                "/admin/articles",
+                                "/users/bookings/**",
+                                "/users/rooms/rooms-by-nation",
+                                "/users/**",
+                                "/auth/rooms-by-nation",
+                                "/oauth2/**",
+                                "/payment/**",
+                                "/swagger-ui/**",          // Thêm Swagger UI
+                                "/v3/api-docs/**",         // Thêm OpenAPI docs
+                                "/swagger-ui.html"        // Đường dẫn Swagger
+                        ).permitAll()
                         .anyRequest().authenticated())
 
 //                .oauth2Login(Customizer.withDefaults())
